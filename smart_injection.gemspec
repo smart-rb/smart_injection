@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_runtime_dependency 'smart_engine',    '~> 0.6'
   spec.add_runtime_dependency 'smart_container', '~> 0.7'
 
   spec.add_development_dependency 'bundler',          '~> 2.1'
@@ -37,4 +38,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec',            '~> 3.9'
   spec.add_development_dependency 'armitage-rubocop', '~> 0.85'
   spec.add_development_dependency 'simplecov',        '~> 0.18'
+  spec.add_development_dependency 'pry',              '~> 0.13'
 end

@@ -3,6 +3,7 @@ PATH
   specs:
     smart_injection (0.0.0)
       smart_container (~> 0.7)
+      smart_engine (~> 0.6)
 
 GEM
   remote: https://rubygems.org/
@@ -20,15 +21,20 @@ GEM
       rubocop-rake (= 0.5.1)
       rubocop-rspec (= 1.40.0)
     ast (2.4.1)
+    coderay (1.1.3)
     concurrent-ruby (1.1.6)
     diff-lcs (1.3)
     docile (1.3.2)
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
+    method_source (1.0.0)
     minitest (5.14.1)
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
+    pry (0.13.1)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
     rack (2.2.3)
     rainbow (3.0.0)
     rake (13.0.1)
@@ -88,6 +94,7 @@ PLATFORMS
 DEPENDENCIES
   armitage-rubocop (~> 0.85)
   bundler (~> 2.1)
+  pry (~> 0.13)
   rake (~> 13.0)
   rspec (~> 3.9)
   simplecov (~> 0.18)

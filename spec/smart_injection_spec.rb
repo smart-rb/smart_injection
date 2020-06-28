@@ -12,8 +12,23 @@ RSpec.describe 'Smoke test' do
       end
     end
 
+    AnotherContainer = SmartCore::Container.define {}
+    ThirdContainer = SmartCore::Container.define {}
+
     class Cerberus
-      include SmartCore::Injection(AppContainer.new)
+      include SmartCore::Injection(AppContainer) # указываем базовый контейнер для автоезолвинга
+
+      register_container(AnotherContainer) # регистрируем дополнительный контейнер для авторезолвинга
+
+      import({ logger: 'database.logger' }, memoize: true, access: :public)
+      import_static({ kickbox: 'clients.kickbox' }, bind: :static) # bind: :dynamic (резолв в рантайме)
+      import(ThirdContainer, { global_logger: 'loggers.global' }) # ассоциируем импорт с незареганным контейнером
+
+      def call
+        logger.info(kickbox.client)
+      end
     end
+
+    Cerberus.linked_containers # array of associated containers
   end
 end
