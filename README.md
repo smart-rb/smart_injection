@@ -22,6 +22,71 @@ require 'smart_core/injection'
 
 ---
 
+## Synopsis
+
+Create some containers:
+
+```ruby
+AppContainer = SmartCore::Container.define do
+  namespace(:data_storage) do
+    register(:main) { Sequel::Model.db }
+    register(:cache) { Redis.new }
+  end
+end
+
+ServiceContainer = SmartCore::Container.define do
+  namespace(:rands) do
+    register(:alphanum) { -> { SeureRandom.alphanumeric } }
+    register(:hex) { -> { SecureRandom.hex } }
+  end
+end
+
+GlobalContainer = SmartCore::Container.define do
+  namespace(:phone_clients) do
+    register(:nexmo) { Nexmo.new }
+    register(:twilio) { Twilio.new }
+  end
+end
+```
+
+And work with dependency injection:
+
+```ruby
+class MiniService
+  include SmartCore::Injection
+
+  register_container(AppContainer)
+  register_container(ServiceContainer)
+
+  # --- or ---
+  include SmartCore::Injection(AppContainer, ServiceContainer)
+
+  # --- or ---
+  include SmartCore::Container
+  register_container(AppContainer, ServiceContainer)
+
+  # import dependencies to an instance
+  import { db: 'data_storage.main' }, bind: :dynamic, access: :private
+  import { rnd: 'rands.alphanum' }, bind: :static, memoize: true
+
+  # import dependencies to a class
+  import_static { cache: 'data_storage.cache', hexer: 'rands.hex' }, bind: :static
+
+  # import from a non-registered container
+  import { phone_client: 'phone_clients.nexmo' }, from: GlobalContainer
+
+  def call
+    db # => returns data_storage.main
+    rnd # => returns rands.alphanum
+    cache # => returns data_storage.cache
+    hexer # => returns rands.hexer
+    phone_client # => returns phone_clients.nexmo
+  end
+end
+```
+
+---
+
 ## Contributing
 
 - Fork it ( https://github.com/smart-rb/smart_injection )
