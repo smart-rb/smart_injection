@@ -4,14 +4,14 @@
 # @since 0.1.0
 class SmartCore::Injection::Locator::ContainerProxy
   # @param registered_containers [SmartCore::Injection::Injector::ContainerSet]
-  # @param explicitly_defined_container [NilClass, SmartCore::Container]
+  # @param explicitly_passed_container [NilClass, SmartCore::Container]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(registered_containers, explicitly_defined_container)
+  def initialize(registered_containers, explicitly_passed_container)
     @registered_containers = registered_containers
-    @explicitly_defined_container = explicitly_defined_container
+    @explicitly_passed_container = explicitly_passed_container
   end
 
   private
@@ -26,5 +26,5 @@ class SmartCore::Injection::Locator::ContainerProxy
   #
   # @api private
   # @since 0.1.0
-  attr_reader :explicitly_defined_container
+  attr_reader :explicitly_passed_container
 end
