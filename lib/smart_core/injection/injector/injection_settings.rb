@@ -21,7 +21,7 @@ class SmartCore::Injection::Injector::InjectionSettings
   #
   # @api private
   # @since 0.1.0
-  ACCESS_DEFINERS = [:public, :protected, :private].freeze
+  ACCESS_MARKS = %i[public protected private].freeze
 
   # @return [Symbol]
   #
@@ -33,7 +33,7 @@ class SmartCore::Injection::Injector::InjectionSettings
   #
   # @api private
   # @since 0.1.0
-  BINDING_STRATEGIES = [:static, :dynamic].freeze
+  BINDING_STRATEGIES = %i[static dynamic].freeze
 
   # @return [Boolean]
   #
