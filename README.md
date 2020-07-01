@@ -6,7 +6,7 @@ Dependency injection principles and idioms realized in scope of Ruby.
 
 ## Major Features
 
-- method-injection strategy (implicit constructor-injection - in the future);
+- method-injection strategy (implicit constructor-injection strategy - in the future);
 - realized as a mixin;
 - instance-method dependency injection;
 - class-method dependency injection;
