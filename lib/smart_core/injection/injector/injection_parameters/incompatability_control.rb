@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
+module SmartCore::Injection::Injector::InjectionParameters::IncompatabilityControl
   class << self
     # @param imports [Hash<String|Symbol,String>]
     # @param memoize [Boolean]
@@ -30,15 +30,21 @@ module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
     # @since 0.1.0
     def prevent_imports_incompatabilites!(imports)
       unless imports.is_a?(::Hash)
-        raise(SmartCore::Injection::ArgumentError)
+        raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
+          Incorrect import list (should be a type of Hash)
+        ERROR_MESSAGE
       end
 
       unless imports.keys.all? { |key| key.is_a?(String) || key.is_a?(Symbol) }
-        raise(SmartCore::Injection::ArgumentError)
+        raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
+          Some method aliases are incorret (they should be a type of String or Symbol)
+        ERROR_MESSAGE
       end
 
       unless imports.values.all? { |value| value.is_a?(String) }
-        raise(SmartCore::Injection::ArgumentError)
+        raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
+          Some injection pathes are incorrect (they should be a type of String)
+        ERROR_MESSAGE
       end
     end
 
@@ -49,7 +55,8 @@ module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
     # @since 0.1.0
     def prevent_memoize_incompatabilites(memoize)
       unless memoize.is_a?(::TrueClass) || memoize.is_a?(::FalseClass)
-        raise(SmartCore::Injection::ArgumentError)
+        raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
+        ERROR_MESSAGE
       end
     end
 
@@ -59,8 +66,9 @@ module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
     # @api private
     # @since 0.1.0
     def prevent_access_incompatabilites(access)
-      unless SmartCore::Injection::Injector::InjectionSettings::ACCESS_MARKS.include?(access)
-        raise(SmartCore::Injection::ArgumentError)
+      unless SmartCore::Injection::Injector::InjectionParameters::ACCESS_MARKS.include?(access)
+        raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
+        ERROR_MESSAGE
       end
     end
 
@@ -70,8 +78,9 @@ module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
     # @api private
     # @since 0.1.0
     def prevent_bind_incompatabilites(bind)
-      unless SmartCore::Injection::Injector::InjectionSettings::BINDING_STRATEGIES.include?(bind)
-        raise(SmartCore::Injection::ArgumentError)
+      unless SmartCore::Injection::Injector::InjectionParameters::BINDING_STRATEGIES.include?(bind)
+        raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
+        ERROR_MESSAGE
       end
     end
 
@@ -82,7 +91,8 @@ module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
     # @since 0.1.0
     def prevent_from_incompatabilites(from)
       unless from.is_a?(NilClass) || from.is_a?(SmartCore::Container)
-        raise(SmartCore::Injection::ArgumentError)
+        raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
+        ERROR_MESSAGE
       end
     end
   end

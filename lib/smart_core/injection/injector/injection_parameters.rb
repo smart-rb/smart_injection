@@ -2,8 +2,8 @@
 
 # @api private
 # @since 0.1.0
-class SmartCore::Injection::Injector::InjectionSettings
-  require_relative 'injection_settings/incompatability_control'
+class SmartCore::Injection::Injector::InjectionParameters
+  require_relative 'injection_parameters/incompatability_control'
 
   # @return [Hash<String|Symbol,String>]
   #
