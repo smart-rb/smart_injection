@@ -4,6 +4,22 @@ Dependency injection principles and idioms realized in scope of Ruby.
 
 ---
 
+## Major Features
+
+- method-injection strategy (implicit constructor-injection - in the future);
+- realized as a mixin;
+- instance-method dependency injection;
+- class-method dependency injection;
+- multiple IoC-container registration;
+- static and dynamic bindings;
+- support for memoization with run-time dependency-switchable re-memoization;
+- an ability to import dependencies from the list of IoC-containers
+- an ability to import from the pre-configured default IoC-container(s);
+- an ability to import from any manually passed IoC-container;
+- privacy control of injected dependency (public/private/protected);
+
+---
+
 ## Installation
 
 ```ruby
