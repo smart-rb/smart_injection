@@ -88,10 +88,10 @@ class SmartCore::Injection::Injector::InjectionSettings
   # @since 0.1.0
   def initialize(
     imports,
-    memoize: DEFAULT_MEMOIZE
+    memoize: DEFAULT_MEMOIZE,
     access: DEFAULT_ACCESS,
     bind: DEFAULT_BINDING_STRATEGY,
-    from: EMPTY_CONTAINER_DESTINATION,
+    from: EMPTY_CONTAINER_DESTINATION
   )
     IncompatabilityControl.prevent_incompatabilities!(
       imports, memoize, access, bind, from

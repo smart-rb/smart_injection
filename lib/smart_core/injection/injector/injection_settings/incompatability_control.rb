@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module SmartCore::Injector::InjectionSettings::IncompatabilityControl
+module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
   class << self
     # @param imports [Hash<String|Symbol,String>]
     # @param memoize [Boolean]
