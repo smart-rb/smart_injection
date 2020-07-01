@@ -77,26 +77,41 @@ class SmartCore::Injection::Injector::InjectionSettings
   # @since 0.1.0
   attr_reader :memoize
 
-  # @param imports [Hash<String|Symbol,String>]
-  # @param memoize [Boolean]
-  # @param access [Symbol]
-  # @param bind [Symbol]
-  # @param from [NilClass, SmartCore::Container]
+  # @return [SmartCore::Injection::Injector::ContainerSet]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :container_set
+
+  # @return [Class, Module]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :injectable
+
+  # @param injectable [Class, Module]
+  # @param container_set [SmartCore::Injection::Injector::ContainerSet]
+  # @param import [Hash<String|Symbol,String>]
+  # @option memoize [Boolean]
+  # @option access [Symbol]
+  # @option bind [Symbol]
+  # @option from [NilClass, SmartCore::Container]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
   def initialize(
+    injectable,
+    container_set,
     imports,
     memoize: DEFAULT_MEMOIZE,
     access: DEFAULT_ACCESS,
     bind: DEFAULT_BINDING_STRATEGY,
     from: EMPTY_CONTAINER_DESTINATION
   )
-    IncompatabilityControl.prevent_incompatabilities!(
-      imports, memoize, access, bind, from
-    )
-
+    IncompatabilityControl.prevent_incompatabilities!(imports, memoize, access, bind, from)
+    @injectable = injectable
+    @container_set = container_set
     @imports = imports
     @memoize = memoize
     @access = access

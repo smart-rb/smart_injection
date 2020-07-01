@@ -21,20 +21,42 @@ module SmartCore::Injection::DSL
   # @api private
   # @since 0.1.0
   module ClassMethods
+    # @param imports [Hash<String|Symbol,String>]
+    # @option memoize [Boolean]
+    # @option access [Symbol]
+    # @option bind [Symbol]
+    # @option from [NilClass, SmartCore::Container]
     # @return [void]
     #
     # @api public
     # @sincd 0.1.0
-    def import(*)
-      __smart_injection_injector__.inject
+    def import(
+      imports,
+      memoize: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_MEMOIZE,
+      access: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_ACCESS,
+      bind: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_BINDING_STRATEGY,
+      from: SmartCore::Injection::Injector::InjectionSettings::EMPTY_CONTAINER_DESTINATION
+    )
+      __smart_injection_injector__.inject(imports, memoize, access, bind, from)
     end
 
+    # @param imports [Hash<String|Symbol,String>]
+    # @option memoize [Boolean]
+    # @option access [Symbol]
+    # @option bind [Symbol]
+    # @option from [NilClass, SmartCore::Container]
     # @return [void]
     #
     # @api public
-    # @since 0.1.0
-    def import_static(*)
-      __smart_injection_injector__.inject_static
+    # @sincd 0.1.0
+    def import_static(
+      imports,
+      memoize: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_MEMOIZE,
+      access: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_ACCESS,
+      bind: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_BINDING_STRATEGY,
+      from: SmartCore::Injection::Injector::InjectionSettings::EMPTY_CONTAINER_DESTINATION
+    )
+      __smart_injection_injector__.inject_static(imports, memoize, access, bind, from)
     end
 
     # @param containers [Array<SmartCore::Container>]

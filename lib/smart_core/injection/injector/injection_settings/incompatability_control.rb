@@ -14,7 +14,7 @@ module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
     # @api private
     # @since 0.1.0
     def prevent_incompatabilities!(imports, memoize, access, bind, from)
-      prevent_imports_incompatabilites(imports)
+      prevent_imports_incompatabilites!(imports)
       prevent_memoize_incompatabilites(memoize)
       prevent_access_incompatabilites(access)
       prevent_bind_incompatabilites(bind)
@@ -28,16 +28,16 @@ module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
     #
     # @api private
     # @since 0.1.0
-    def prevent_imports_incompatabilites(imports)
-      unless import.is_a?(::Hash)
+    def prevent_imports_incompatabilites!(imports)
+      unless imports.is_a?(::Hash)
         raise(SmartCore::Injection::ArgumentError)
       end
 
-      unless hash.keys.all? { |key| key.is_a?(String) || key.is_a?(Symbol) }
+      unless imports.keys.all? { |key| key.is_a?(String) || key.is_a?(Symbol) }
         raise(SmartCore::Injection::ArgumentError)
       end
 
-      unless hash.values.all? { |value| value.is_a?(String) }
+      unless imports.values.all? { |value| value.is_a?(String) }
         raise(SmartCore::Injection::ArgumentError)
       end
     end

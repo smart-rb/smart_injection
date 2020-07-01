@@ -6,6 +6,7 @@ class SmartCore::Injection::Injector
   require_relative 'injector/container_set'
   require_relative 'injector/injection_settings'
   require_relative 'injector/modulizer'
+  require_relative 'injector/commands'
 
   # @param injectable [Class, Module]
   # @return [void]
@@ -18,20 +19,30 @@ class SmartCore::Injection::Injector
     @access_lock = SmartCore::Engine::Lock.new
   end
 
+  # @param imports [Hash<String|Symbol,String>]
+  # @param memoize [Boolean]
+  # @param access [Symbol]
+  # @param bind [Symbol]
+  # @param from [NilClass, SmartCore::Container]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def inject
-    thread_safe {}
+  def inject(imports, memoize, access, bind, from)
+    thread_safe { inject_instance_method(imports, memoize, access, bind, from) }
   end
 
+  # @param imports [Hash<String|Symbol,String>]
+  # @param memoize [Boolean]
+  # @param access [Symbol]
+  # @param bind [Symbol]
+  # @param from [NilClass, SmartCore::Container]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def inject_static
-    thread_safe {}
+  def inject_static(imports, memoize, access, bind, from)
+    thread_safe { inject_class_method(imports, memoize, access, bind, from) }
   end
 
   # @param containers [Array<SmartCore::Container>]
@@ -64,6 +75,52 @@ class SmartCore::Injection::Injector
   # @api private
   # @since 0.1.0
   attr_reader :linked_containers
+
+  # @param imports [Hash<String|Symbol,String>]
+  # @param memoize [Boolean]
+  # @param access [Symbol]
+  # @param bind [Symbol]
+  # @param from [NilClass, SmartCore::Container]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def inject_instance_method(imports, memoize, access, bind, from)
+    SmartCore::Injection::Injector::Commands::InjectInstanceMethod.call(
+      SmartCore::Injection::Injector::InjectionSettings.new(
+        injectable,
+        linked_containers,
+        imports,
+        memoize: memoize,
+        access: access,
+        bind: bind,
+        from: from
+      )
+    )
+  end
+
+  # @param imports [Hash<String|Symbol,String>]
+  # @param memoize [Boolean]
+  # @param access [Symbol]
+  # @param bind [Symbol]
+  # @param from [NilClass, SmartCore::Container]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def inject_class_method(imports, memoize, access, bind, from)
+    SmartCore::Injection::Injector::Commands::InjectClassMethod.call(
+      SmartCore::Injection::Injector::InjectionSettings.new(
+        injectable,
+        linked_containers,
+        imports,
+        memoize: memoize,
+        access: access,
+        bind: bind,
+        from: from
+      )
+    )
+  end
 
   # @param containers [Array<SmartCore::Container>]
   # @return [void]

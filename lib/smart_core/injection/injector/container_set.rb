@@ -6,6 +6,10 @@ class SmartCore::Injection::Injector::ContainerSet
   # @since 0.1.0
   include Enumerable
 
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
   def initialize
     @containers = [] # NOTE: we use Array cuz we need an ordered set
     @access_lock = SmartCore::Engine::Lock.new
