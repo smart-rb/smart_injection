@@ -78,8 +78,8 @@ class MiniService
   def call
     db # => returns data_storage.main
     rnd # => returns rands.alphanum
-    cache # => returns data_storage.cache
-    hexer # => returns rands.hexer
+    self.class.cache # => returns data_storage.cache
+    self.class.hexer # => returns rands.hexer
     phone_client # => returns phone_clients.nexmo
   end
 end
