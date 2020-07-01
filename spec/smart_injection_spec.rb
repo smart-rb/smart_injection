@@ -20,13 +20,14 @@ RSpec.describe 'Smoke test' do
 
       register_container(AnotherContainer) # регистрируем дополнительный контейнер для авторезолвинга
 
-      import({ logger: 'database.logger' }, memoize: true, access: :public)
+      import({ logger: 'database.logger', from: 'keka' }, memoize: true, access: :public)
       import_static({ kickbox: 'clients.kickbox' }, bind: :static) # bind: :dynamic (резолв в рантайме)
-      import(ThirdContainer, { global_logger: 'loggers.global' }) # ассоциируем импорт с незареганным контейнером
+      import({ global_logger: 'loggers.global' }, from: ThirdContainer) # ассоциируем импорт с незареганным контейнером
 
       def call
         logger.info(kickbox.client)
       end
+
     end
 
     Cerberus.linked_containers # array of associated containers

@@ -3,6 +3,7 @@
 # @api private
 # @since 0.1.0
 class SmartCore::Injection::Injector
+  require_relative 'injector/container_set'
   require_relative 'injector/injection_settings'
   require_relative 'injector/modulizer'
 
@@ -13,7 +14,7 @@ class SmartCore::Injection::Injector
   # @since 0.1.0
   def initialize(injectable)
     @injectable = injectable
-    @linked_containers = []
+    @linked_containers = SmartCore::Injection::Injector::ContainerSet.new
     @access_lock = SmartCore::Engine::Lock.new
   end
 
@@ -42,12 +43,12 @@ class SmartCore::Injection::Injector
     thread_safe { link_container(containers) }
   end
 
-  # @return [Array<SmartCOre::Container>]
+  # @return [Array<SmartCore::Container>]
   #
   # @api private
   # @since 0.1.0
   def associated_containers
-    thread_safe { linked_containers.dup }
+    thread_safe { linked_containers.list }
   end
 
   private
@@ -70,7 +71,9 @@ class SmartCore::Injection::Injector
   # @api private
   # @since 0.1.0
   def link_container(containers)
-    linked_containers.push(*containers)
+    containers.each do |container|
+      linked_containers.add(container)
+    end
   end
 
   # @return [Any]
