@@ -4,6 +4,20 @@
 # @since 0.1.0
 class SmartCore::Injection::Locator
   require_relative 'locator/container_proxy'
+  require_relative 'locator/settings'
+  require_relative 'locator/factory'
+
+  # @param import_path [String]
+  # @param container_proxy [SmartCore::Injection::Locator::ContainerProxy]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def initialize(import_path, container_proxy)
+    @import_path = import_path
+    @container_proxy = container_proxy
+    @dependency = SmartCore::Engine::Atom.new
+  end
 
   # инстанцируется настройками инжекта (БЕЗ ИМПОРТОВ)
   # инстанцируется объектом КОНТЕЙНЕР_ПРОКСИ

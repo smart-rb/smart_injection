@@ -109,7 +109,15 @@ class SmartCore::Injection::Injector::InjectionParameters
     bind: DEFAULT_BINDING_STRATEGY,
     from: EMPTY_CONTAINER_DESTINATION
   )
-    IncompatabilityControl.prevent_incompatabilities!(imports, memoize, access, bind, from)
+    IncompatabilityControl.prevent_incompatabilities!(
+      injectable,
+      imports,
+      memoize,
+      access,
+      bind,
+      from
+    )
+
     @injectable = injectable
     @container_set = container_set
     @imports = imports
@@ -117,5 +125,33 @@ class SmartCore::Injection::Injector::InjectionParameters
     @access = access
     @bind = bind
     @from = from
+  end
+
+  # @return [Class, Module]
+  #
+  # @api private
+  # @since 0.1.0
+  def instance_level_injectable
+    injectable
+  end
+
+  # @return [Class]
+  #
+  # @api private
+  # @since 0.1.0
+  def class_level_injectable
+    class << injectable; self; end
+  end
+
+  # @param block [Block]
+  # @yield [import_key, import_path]
+  # @yieldparam import_key [String, Symbol]
+  # @yieldparam import_path [String]
+  # @return [Enumerable]
+  #
+  # @api private
+  # @since 0.1.0
+  def each_import(&block)
+    block_given? ? imports.each_pair(&block) : imports.each_pair
   end
 end

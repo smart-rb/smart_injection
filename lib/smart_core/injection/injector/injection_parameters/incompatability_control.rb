@@ -4,6 +4,7 @@
 # @since 0.1.0
 module SmartCore::Injection::Injector::InjectionParameters::IncompatabilityControl
   class << self
+    # @param injectable [Class, Module]
     # @param imports [Hash<String|Symbol,String>]
     # @param memoize [Boolean]
     # @param access [Symbol]
@@ -13,7 +14,8 @@ module SmartCore::Injection::Injector::InjectionParameters::IncompatabilityContr
     #
     # @api private
     # @since 0.1.0
-    def prevent_incompatabilities!(imports, memoize, access, bind, from)
+    def prevent_incompatabilities!(injectable, imports, memoize, access, bind, from)
+      prevent_injectable_incompatabilities!(injectable)
       prevent_imports_incompatabilites!(imports)
       prevent_memoize_incompatabilites(memoize)
       prevent_access_incompatabilites(access)
@@ -22,6 +24,18 @@ module SmartCore::Injection::Injector::InjectionParameters::IncompatabilityContr
     end
 
     private
+
+    # @param injectable [Class, Module]
+    # @return [void]
+    #
+    # @api private
+    # @since 0.1.0
+    def prevent_injectable_incompatabilities!(injectable)
+      unless injectable.is_a?(Class) || injectable.is_a?(Module)
+        raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
+        ERROR_MESSAGE
+      end
+    end
 
     # @param imports [Hash<String|Symbol,String>]
     # @return [void]
