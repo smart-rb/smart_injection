@@ -6,6 +6,8 @@ require 'set'
 # @api public
 # @since 0.1.0
 module SmartCore
+  # TODO: обязательно учесть наследование
+
   class << self
     # @param containers [Array<SmartCore::Container>]
     # @return [Module]
