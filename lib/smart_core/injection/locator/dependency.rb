@@ -13,6 +13,7 @@ class SmartCore::Injection::Locator::Dependency
     @barrier = SmartCore::Engine::Lock.new
   end
 
+  # @param block [Block]
   # @return [Any]
   #
   # @api private
