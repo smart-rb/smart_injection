@@ -15,6 +15,7 @@ RSpec.describe 'Smoke test' do
     AnotherContainer = SmartCore::Container.define do
       namespace(:clients) do
         register(:kickbox) { 'kickbox' }
+        register(:vonage) { 'vonage' }
       end
 
       namespace(:database) do
@@ -33,7 +34,7 @@ RSpec.describe 'Smoke test' do
 
       register_container(AnotherContainer) # регистрируем дополнительный контейнер для авторезолвинга
 
-      import({ logger: 'database.logger' }, memoize: true, access: :public)
+      import({ logger: 'database.logger', from: 'clients.vonage' }, memoize: true, access: :public)
       import_static({ kickbox: 'clients.kickbox' }, bind: :static) # bind: :dynamic (резолв в рантайме)
       import({ global_logger: 'loggers.global' }, from: ThirdContainer) # ассоциируем импорт с незареганным контейнером
 
@@ -48,6 +49,7 @@ RSpec.describe 'Smoke test' do
 
     expect(app.logger).to eq('another_logger')
     expect(app.global_logger).to eq('global_logger')
+    expect(app.from).to eq('vonage')
     expect(Cerberus.kickbox).to eq('kickbox')
   end
 end
