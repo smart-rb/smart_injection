@@ -12,8 +12,17 @@ RSpec.describe 'Smoke test' do
       end
     end
 
-    AnotherContainer = SmartCore::Container.define {}
-    ThirdContainer = SmartCore::Container.define {}
+    AnotherContainer = SmartCore::Container.define do
+      namespace(:clients) do
+        register(:kickbox) { 'kickbox' }
+      end
+    end
+
+    ThirdContainer = SmartCore::Container.define do
+      namespace(:loggers) do
+        register(:global) { Logger.new }
+      end
+    end
 
     class Cerberus
       include SmartCore::Injection(AppContainer) # указываем базовый контейнер для автоезолвинга

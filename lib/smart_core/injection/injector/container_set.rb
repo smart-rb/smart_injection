@@ -25,6 +25,7 @@ class SmartCore::Injection::Injector::ContainerSet
   end
   alias_method :<<, :add
 
+  # @param block [Block]
   # @yield [container]
   # @yieldparam container [SmartCore::Container]
   # @return [Enumerator]
@@ -32,7 +33,18 @@ class SmartCore::Injection::Injector::ContainerSet
   # @api private
   # @since 0.1.0
   def each(&block)
-    thread_safe { block_given? ? containes.each(&block) : containers.each }
+    thread_safe { block_given? ? containers.each(&block) : containers.each }
+  end
+
+  # @param block [Block]
+  # @yield [container]
+  # @yieldparam container [SmartCore::Container]
+  # @return [Enumerator]
+  #
+  # @api private
+  # @since 0.1.0
+  def reverse_each(&block)
+    thread_safe { block_given? ? containers.reverse_each(&block) : containers.reverse_each }
   end
 
   # @return [Array<SmartCore::Container>]

@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module SmartCore::Injection::Injector::InjectionParameters::IncompatabilityControl
+module SmartCore::Injection::Injector::InjectionSettings::IncompatabilityControl
   class << self
     # @param injectable [Class, Module]
     # @param imports [Hash<String|Symbol,String>]
@@ -80,7 +80,7 @@ module SmartCore::Injection::Injector::InjectionParameters::IncompatabilityContr
     # @api private
     # @since 0.1.0
     def prevent_access_incompatabilites(access)
-      unless SmartCore::Injection::Injector::InjectionParameters::ACCESS_MARKS.include?(access)
+      unless SmartCore::Injection::Injector::InjectionSettings::ACCESS_MARKS.include?(access)
         raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
         ERROR_MESSAGE
       end
@@ -92,7 +92,7 @@ module SmartCore::Injection::Injector::InjectionParameters::IncompatabilityContr
     # @api private
     # @since 0.1.0
     def prevent_bind_incompatabilites(bind)
-      unless SmartCore::Injection::Injector::InjectionParameters::BINDING_STRATEGIES.include?(bind)
+      unless SmartCore::Injection::Injector::InjectionSettings::BINDING_STRATEGIES.include?(bind)
         raise(SmartCore::Injection::ArgumentError, <<~ERROR_MESSAGE)
         ERROR_MESSAGE
       end

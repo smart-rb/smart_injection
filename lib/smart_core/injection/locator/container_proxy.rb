@@ -14,6 +14,37 @@ class SmartCore::Injection::Locator::ContainerProxy
     @explicitly_passed_container = explicitly_passed_container
   end
 
+  # @param dependency_path [String]
+  # @return [Any]
+  #
+  # @raise [SmartCore::Container::ResolvingError]
+  #
+  # @api private
+  # @since 0.1.0
+  def resolve_dependency(dependency_path)
+    resolving_error = nil
+
+    each_container do |container|
+      begin # rubocop:disable Style/RedundantBegin
+        return container.resolve(dependency_path)
+      rescue SmartCore::Container::ResolvingError => error
+        resolving_error = error
+      end
+    end
+
+    raise(resolving_error)
+  end
+
+  # @param import_path [String]
+  # @param observer [Block]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def observe(import_path, &observer)
+    # TODO: implement
+  end
+
   private
 
   # @return [SmartCore::Injection::Injector::ContainerSet]
@@ -27,4 +58,16 @@ class SmartCore::Injection::Locator::ContainerProxy
   # @api private
   # @since 0.1.0
   attr_reader :explicitly_passed_container
+
+  # @param block [Block]
+  # @yield [container]
+  # @yieldparam container [SmartCore::Container]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def each_container(&block)
+    yield(explicitly_passed_container) if explicitly_passed_container
+    registered_containers.reverse_each(&block)
+  end
 end

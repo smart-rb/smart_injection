@@ -2,8 +2,8 @@
 
 # @api private
 # @since 0.1.0
-class SmartCore::Injection::Injector::InjectionParameters
-  require_relative 'injection_parameters/incompatability_control'
+class SmartCore::Injection::Injector::InjectionSettings
+  require_relative 'injection_settings/incompatability_control'
 
   # @return [Hash<String|Symbol,String>]
   #
@@ -141,6 +141,22 @@ class SmartCore::Injection::Injector::InjectionParameters
   # @since 0.1.0
   def class_level_injectable
     class << injectable; self; end
+  end
+
+  # @return [Boolean]
+  #
+  # @api private
+  # @since 0.1.0
+  def bind_dynamic?
+    bind == :dynamic
+  end
+
+  # @return [Boolean]
+  #
+  # @api private
+  # @since 0.1.0
+  def bind_static?
+    bind == :static
   end
 
   # @param block [Block]

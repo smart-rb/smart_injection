@@ -4,7 +4,7 @@
 # @since 0.1.0
 class SmartCore::Injection::Injector
   require_relative 'injector/container_set'
-  require_relative 'injector/injection_parameters'
+  require_relative 'injector/injection_settings'
   require_relative 'injector/modulizer'
   require_relative 'injector/strategies'
 
@@ -87,7 +87,7 @@ class SmartCore::Injection::Injector
   # @since 0.1.0
   def inject_instance_method(imports, memoize, access, bind, from)
     SmartCore::Injection::Injector::Strategies::MethodInjection.inject_instance_method(
-      SmartCore::Injection::Injector::InjectionParameters.new(
+      SmartCore::Injection::Injector::InjectionSettings.new(
         injectable,
         linked_containers,
         imports,
@@ -110,7 +110,7 @@ class SmartCore::Injection::Injector
   # @since 0.1.0
   def inject_class_method(imports, memoize, access, bind, from)
     SmartCore::Injection::Injector::Strategies::MethodInjection.inject_class_method(
-      SmartCore::Injection::Injector::InjectionParameters.new(
+      SmartCore::Injection::Injector::InjectionSettings.new(
         injectable,
         linked_containers,
         imports,

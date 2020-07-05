@@ -32,10 +32,10 @@ module SmartCore::Injection::DSL
     # @sincd 0.1.0
     def import(
       imports,
-      memoize: SmartCore::Injection::Injector::InjectionParameters::DEFAULT_MEMOIZE,
-      access: SmartCore::Injection::Injector::InjectionParameters::DEFAULT_ACCESS,
-      bind: SmartCore::Injection::Injector::InjectionParameters::DEFAULT_BINDING_STRATEGY,
-      from: SmartCore::Injection::Injector::InjectionParameters::EMPTY_CONTAINER_DESTINATION
+      memoize: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_MEMOIZE,
+      access: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_ACCESS,
+      bind: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_BINDING_STRATEGY,
+      from: SmartCore::Injection::Injector::InjectionSettings::EMPTY_CONTAINER_DESTINATION
     )
       __smart_injection_injector__.inject(imports, memoize, access, bind, from)
     end
@@ -51,10 +51,10 @@ module SmartCore::Injection::DSL
     # @sincd 0.1.0
     def import_static(
       imports,
-      memoize: SmartCore::Injection::Injector::InjectionParameters::DEFAULT_MEMOIZE,
-      access: SmartCore::Injection::Injector::InjectionParameters::DEFAULT_ACCESS,
-      bind: SmartCore::Injection::Injector::InjectionParameters::DEFAULT_BINDING_STRATEGY,
-      from: SmartCore::Injection::Injector::InjectionParameters::EMPTY_CONTAINER_DESTINATION
+      memoize: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_MEMOIZE,
+      access: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_ACCESS,
+      bind: SmartCore::Injection::Injector::InjectionSettings::DEFAULT_BINDING_STRATEGY,
+      from: SmartCore::Injection::Injector::InjectionSettings::EMPTY_CONTAINER_DESTINATION
     )
       __smart_injection_injector__.inject_static(imports, memoize, access, bind, from)
     end

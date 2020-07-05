@@ -4,8 +4,14 @@
 # @since 0.1.0
 class SmartCore::Injection::Locator
   require_relative 'locator/container_proxy'
-  require_relative 'locator/settings'
+  require_relative 'locator/dependency'
   require_relative 'locator/factory'
+
+  # @return [String]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :import_path
 
   # @param import_path [String]
   # @param container_proxy [SmartCore::Injection::Locator::ContainerProxy]
@@ -16,14 +22,38 @@ class SmartCore::Injection::Locator
   def initialize(import_path, container_proxy)
     @import_path = import_path
     @container_proxy = container_proxy
-    @dependency = SmartCore::Engine::Atom.new
+    @dependency = SmartCore::Injection::Locator::Dependency.new
   end
 
-  # инстанцируется настройками инжекта (БЕЗ ИМПОРТОВ)
-  # инстанцируется объектом КОНТЕЙНЕР_ПРОКСИ
-  # инстанцируется ключем импорта, которым мы достаем через прокси нужную депенденси И уже
-  #   в зависимости от настроек мемоизируем ее ИЛИ пытаемся пере-импортирвоать и тд и тп
-  # на каждый кей-веэлью в импортах свой отдельный локатор
-  # создание локатора идет через Фэктори, который Создаем контейнер-прокси
-  #   сам фэктори инстанцируется вместе с инъекшн-сеттингсами, из которых он и создаст нужный контейнер-прокси
+  # @return [Any]
+  #
+  # @api private
+  # @since 0.1.0
+  def resolve_dependency
+    dependency.bind { container_proxy.resolve_dependency(import_path) }
+  end
+  alias_method :bind!, :resolve_dependency
+
+  # @return [Any]
+  #
+  # @api private
+  # @since 0.1.0
+  def rebind_dependency
+    dependency.rebind { container_proxy.resolve(import_path) }
+  end
+  alias_method :rebind!, :rebind_dependency
+
+  private
+
+  # @return [SmartCore::Injection::Locator::Dependency]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :dependency
+
+  # @return [SmartCore::Injection::Locator::ContainerProxy]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :container_proxy
 end
