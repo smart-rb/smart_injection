@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart_injection (0.0.0.alpha)
+    smart_injection (0.0.0.alpha2)
       smart_container (~> 0.7)
       smart_engine (~> 0.7)
 
