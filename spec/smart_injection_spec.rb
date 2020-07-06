@@ -78,6 +78,7 @@ RSpec.describe 'Smoke test' do
 
     hydra = Hydra.new
 
+    # own methods check and privacy check
     expect { hydra.db_logger }.to raise_error(::NoMethodError)
     expect(hydra.send(:db_logger)).to eq('another_logger')
 
