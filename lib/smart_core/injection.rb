@@ -25,6 +25,7 @@ module SmartCore
   # @since 0.1.0
   module Injection
     require_relative 'injection/version'
+    require_relative 'injection/errors'
     require_relative 'injection/injector'
     require_relative 'injection/locator'
     require_relative 'injection/dsl'

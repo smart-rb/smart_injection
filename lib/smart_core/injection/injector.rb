@@ -50,7 +50,7 @@ class SmartCore::Injection::Injector
   #
   # @api private
   # @since 0.1.0
-  def register_container(containers)
+  def register_container(*containers)
     thread_safe { link_container(containers) }
   end
 
@@ -60,6 +60,15 @@ class SmartCore::Injection::Injector
   # @since 0.1.0
   def associated_containers
     thread_safe { linked_containers.list }
+  end
+
+  # @param another_injectable [Class, Module]
+  # @return [SmartCore::Injection::Injector]
+  #
+  # @api private
+  # @since 0.1.0
+  def duplicate_for(another_injectable)
+    thread_safe { create_duplicate(another_injectable) }
   end
 
   private
@@ -75,6 +84,19 @@ class SmartCore::Injection::Injector
   # @api private
   # @since 0.1.0
   attr_reader :linked_containers
+
+  # @param another_injectable [Class, Module]
+  # @return [SmartCore::Injection::Injector]
+  #
+  # @api private
+  # @since 0.1.0
+  def create_duplicate(another_injectable)
+    self.class.new(another_injectable).tap do |duplicate|
+      linked_containers.each do |container|
+        duplicate.register_container(container)
+      end
+    end
+  end
 
   # @param imports [Hash<String|Symbol,String>]
   # @param memoize [Boolean]

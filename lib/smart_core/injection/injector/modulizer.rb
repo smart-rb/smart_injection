@@ -20,7 +20,7 @@ module SmartCore::Injection::Injector::Modulizer
     # @api private
     # @since 0.1.0
     def inject_to(base_klass)
-      base_klass.extend(::SmartCore::Injection::DSL)
+      base_klass.include(::SmartCore::Injection::DSL)
     end
 
     private
@@ -46,7 +46,7 @@ module SmartCore::Injection::Injector::Modulizer
     def build_container_injectable_module(containers)
       Module.new do
         define_singleton_method :included do |base_klass|
-          base_klass.extend(::SmartCore::Injection::DSL)
+          base_klass.include(::SmartCore::Injection::DSL)
           base_klass.register_container(*containers)
         end
       end

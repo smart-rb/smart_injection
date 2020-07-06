@@ -17,6 +17,7 @@ class SmartCore::Injection::Locator::ContainerProxy
   # @param dependency_path [String]
   # @return [Any]
   #
+  # @raise [SmartCore::Injection::NoRegisteredContainersError]
   # @raise [SmartCore::Container::ResolvingError]
   #
   # @api private
@@ -32,7 +33,13 @@ class SmartCore::Injection::Locator::ContainerProxy
       end
     end
 
-    raise(resolving_error)
+    unless resolving_error
+      raise(SmartCore::Injection::NoRegisteredContainersError, <<~ERROR_MESSAGE)
+        You haven't registered any containers for import.
+      ERROR_MESSAGE
+    else
+      raise(resolving_error)
+    end
   end
 
   # @param import_path [String]

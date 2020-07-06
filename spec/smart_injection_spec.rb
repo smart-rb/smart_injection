@@ -41,7 +41,6 @@ RSpec.describe 'Smoke test' do
       def call
         logger.info(kickbox.client)
       end
-
     end
 
     Cerberus.linked_containers # array of associated containers
@@ -51,5 +50,57 @@ RSpec.describe 'Smoke test' do
     expect(app.global_logger).to eq('global_logger')
     expect(app.from).to eq('vonage')
     expect(Cerberus.kickbox).to eq('kickbox')
+
+    ChimeraContainer = SmartCore::Container.define do
+      namespace(:heads) do
+        register(:snake) { 'snake_head' }
+      end
+    end
+
+    # inheritance from injection-ready class
+    class Chimera < Cerberus
+      register_container(ChimeraContainer)
+
+      import({ main_head: 'heads.snake' })
+
+      def call
+        main_head
+      end
+    end
+
+    expect(Chimera.new.call).to eq('snake_head')
+    expect(Chimera.kickbox).to eq('kickbox') # from Cerberus.kickbox
+
+    # inheritance from inherited entity
+    class Hydra < Chimera
+      import({ db_logger: 'database.logger', kickbox: 'clients.kickbox', head: 'heads.snake' }, bind: :static, access: :private)
+    end
+
+    hydra = Hydra.new
+
+    expect { hydra.db_logger }.to raise_error(::NoMethodError)
+    expect(hydra.send(:db_logger)).to eq('another_logger')
+
+    expect { hydra.kickbox }.to raise_error(::NoMethodError)
+    expect(hydra.send(:kickbox)).to eq('kickbox')
+
+    expect { hydra.head }.to raise_error(::NoMethodError)
+    expect(hydra.send(:head)).to eq('snake_head')
+
+    expect(hydra.main_head).to eq('snake_head') # from Chimera#main_head
+    expect(hydra.from).to eq('vonage') # from Cerberus#from
+
+    expect(Hydra.kickbox).to eq('kickbox') # from Cerberus.kickbox
+
+    # check linked containers
+    expect(Hydra.linked_containers).to contain_exactly(
+      AppContainer, AnotherContainer, ChimeraContainer
+    )
+    expect(Chimera.linked_containers).to contain_exactly(
+      AppContainer, AnotherContainer, ChimeraContainer
+    )
+    expect(Cerberus.linked_containers).to contain_exactly(
+      AppContainer, AnotherContainer
+    )
   end
 end
