@@ -8,7 +8,7 @@ Dependency injection principles and idioms realized in scope of Ruby.
 
 - `method-injection` strategy
 - `soon:` constructor injection strategy;
-- `soon:` attribute injection strategy;
+- `soon:` property injection strategy;
 - realized as a mixin;
 - instance-method dependency injection;
 - class-method dependency injection;
