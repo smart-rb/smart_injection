@@ -80,7 +80,7 @@ class MiniService
   include SmartCore::Injection(AppContainer, ServiceContainer)
 
   # --- or ---
-  include SmartCore::Container
+  include SmartCore::Injection
   register_container(AppContainer, ServiceContainer)
 
   # import dependencies to an instance
