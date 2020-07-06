@@ -12,7 +12,7 @@ module SmartCore::Injection::Locator::Factory
     def create(injection_settings, import_key, import_path)
       container_proxy = create_container_proxy(injection_settings)
       locator = create_locator(import_path, container_proxy).tap do
-        control_inection_memoization(injection_settings, container_proxy, locator, import_path)
+        control_injection_memoization(injection_settings, container_proxy, locator, import_path)
       end
     end
 
@@ -46,7 +46,7 @@ module SmartCore::Injection::Locator::Factory
     #
     # @api private
     # @since 0.1.0
-    def control_inection_memoization(injection_settings, container_proxy, locator, import_path)
+    def control_injection_memoization(injection_settings, container_proxy, locator, import_path)
       container_proxy.observe(import_path) { locator.rebind! } unless injection_settings.memoize
     end
   end
