@@ -84,14 +84,14 @@ class MiniService
   register_container(AppContainer, ServiceContainer)
 
   # import dependencies to an instance
-  import { db: 'data_storage.main' }, bind: :dynamic, access: :private
-  import { rnd: 'rands.alphanum' }, bind: :static, memoize: true
+  import({ db: 'data_storage.main' }, bind: :dynamic, access: :private)
+  import({ rnd: 'rands.alphanum' }, bind: :static, memoize: true)
 
   # import dependencies to a class
-  import_static { cache: 'data_storage.cache', hexer: 'rands.hex' }, bind: :static
+  import_static({ cache: 'data_storage.cache', hexer: 'rands.hex' }, bind: :static)
 
   # import from a non-registered container
-  import { phone_client: 'phone_clients.nexmo' }, from: GlobalContainer
+  import({ phone_client: 'phone_clients.nexmo' }, from: GlobalContainer)
 
   def call
     db # => returns data_storage.main

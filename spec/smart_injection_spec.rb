@@ -5,6 +5,71 @@ RSpec.describe 'Smoke test' do
     expect(SmartCore::Injection::VERSION).not_to be nil
   end
 
+  specify 'dependency changement and rebinding (considering the memoization and not)' do
+    SimpleContainer = SmartCore::Container.define do
+      namespace(:database) do
+        register(:logger) { 'simple_logger' }
+      end
+
+      register(:game) { 'overwatch' }
+    end
+
+    AnotherSimpleContainer = SmartCore::Container.define do
+      namespace(:database) do
+        register(:logger) { 'another_simple_logger' }
+      end
+    end
+
+    class SimpleService
+      include SmartCore::Injection
+
+      register_container(SimpleContainer)
+
+      import({ db_logger: 'database.logger' })
+      import({ another_db_logger: 'database.logger' }, from: AnotherSimpleContainer)
+      import({ game: 'game' }, memoize: true)
+
+      def call
+        { db_logger: db_logger, another_db_logger: another_db_logger, game: game }
+      end
+    end
+
+    service = SimpleService.new
+
+    expect(service.call).to eq({
+      db_logger: 'simple_logger',
+      another_db_logger: 'another_simple_logger',
+      game: 'overwatch'
+    })
+
+    # re-registration of non-memoized import
+    SimpleContainer.fetch(:database).register(:logger) { 'changed_simple_logger' }
+
+    expect(service.call).to eq({
+      db_logger: 'changed_simple_logger', # changed
+      another_db_logger: 'another_simple_logger',
+      game: 'overwatch'
+    })
+
+    # re-registration of non-memoized import
+    AnotherSimpleContainer.fetch(:database).register(:logger) { 'changed_another_logger' }
+
+    expect(service.call).to eq({
+      db_logger: 'changed_simple_logger',
+      another_db_logger: 'changed_another_logger', # changed
+      game: 'overwatch'
+    })
+
+    # re-registration of memoized import
+    SimpleContainer.register(:game) { 'warcraft' }
+
+    expect(service.call).to eq({
+      db_logger: 'changed_simple_logger',
+      another_db_logger: 'changed_another_logger',
+      game: 'overwatch' # not changed (memoized value)
+    })
+  end
+
   specify do
     AppContainer = SmartCore::Container.define do
       namespace(:database) do
@@ -73,7 +138,8 @@ RSpec.describe 'Smoke test' do
 
     # inheritance from inherited entity
     class Hydra < Chimera
-      import({ db_logger: 'database.logger', kickbox: 'clients.kickbox', head: 'heads.snake' }, bind: :static, access: :private)
+      import({ db_logger: 'database.logger', kickbox: 'clients.kickbox', head: 'heads.snake' },
+             bind: :static, access: :private)
     end
 
     hydra = Hydra.new

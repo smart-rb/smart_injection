@@ -20,7 +20,7 @@ class SmartCore::Injection::Locator::Dependency
   # @since 0.1.0
   def rebind(&block)
     with_barrier do
-      @bind = false
+      @binded = false
       bind(&block)
     end
   end
@@ -36,7 +36,7 @@ class SmartCore::Injection::Locator::Dependency
         @value
       else
         @binded = true
-        @value = yield(@value)
+        @value = yield
       end
     end
   end

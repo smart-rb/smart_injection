@@ -39,7 +39,7 @@ class SmartCore::Injection::Locator
   # @api private
   # @since 0.1.0
   def rebind_dependency
-    dependency.rebind { container_proxy.resolve(import_path) }
+    dependency.rebind { container_proxy.resolve_dependency(import_path) }
   end
   alias_method :rebind!, :rebind_dependency
 
