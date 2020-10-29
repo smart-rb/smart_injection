@@ -1,6 +1,6 @@
 # SmartCore::Injection &middot; [![Gem Version](https://badge.fury.io/rb/smart_injection.svg)](https://badge.fury.io/rb/smart_injection) [![Build Status](https://travis-ci.org/smart-rb/smart_injection.svg?branch=master)](https://travis-ci.org/smart-rb/smart_injection)
 
-Dependency injection principles and idioms realized in scope of Ruby.
+Dependency injection principles and idioms realized in scope of Ruby. Support for method-injeciton strategy, container-based dependency resolving, static and dynamic bindings and etc.
 
 ---
 
