@@ -22,6 +22,17 @@ Dependency injection principles and idioms realized in scope of Ruby. Support fo
 
 ---
 
+## Usage
+
+- [Installation](#installation)
+- [Synopsis](#synopsis)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Authors](#authors)
+
+---
+
 ## Installation
 
 ```ruby
@@ -107,7 +118,8 @@ end
 
 ## Roadmap
 
-[0.2.0] - support for default injection configuration which should be specified in `SmartCore::Injection` module inclusion (in addition to default containers);
+**[0.2.0]** - support for default injection configuration which should be specified in `SmartCore::Injection` module inclusion (in addition to default containers);
+**[0.x.]** - more docs, more examples, more tips-and-tricks :)
 
 ---
 
