@@ -105,6 +105,12 @@ end
 
 ---
 
+## Roadmap
+
+[0.2.0] - support for default injection configuration which should be specified in `SmartCore::Injection` module inclusion (in addition to default containers);
+
+---
+
 ## Contributing
 
 - Fork it ( https://github.com/smart-rb/smart_injection )
