@@ -1,4 +1,4 @@
-# SmartCore::Injection &middot; [![Gem Version](https://badge.fury.io/rb/smart_injection.svg)](https://badge.fury.io/rb/smart_injection) [![Build Status](https://travis-ci.org/smart-rb/smart_injection.svg?branch=master)](https://travis-ci.org/smart-rb/smart_injection)
+# SmartCore::Injection &middot; [![Gem Version](https://badge.fury.io/rb/smart_injection.svg)](https://badge.fury.io/rb/smart_injection)
 
 Dependency injection principles and idioms realized in scope of Ruby. Support for method-injeciton strategy, container-based dependency resolving, static and dynamic bindings and etc.
 
@@ -27,6 +27,7 @@ Dependency injection principles and idioms realized in scope of Ruby. Support fo
 - [Installation](#installation)
 - [Synopsis](#synopsis)
 - [Roadmap](#roadmap)
+- [Build](#build)
 - [Contributing](#contributing)
 - [License](#license)
 - [Authors](#authors)
@@ -121,6 +122,28 @@ end
 - **[0.2.0]** - support for default injection configuration which should be specified in `SmartCore::Injection` module inclusion (in addition to default containers)
 - **[0.x.0]** - more docs, more examples, more tips-and-tricks :)
 - **[0.x.0]** - migrate to GithubActions
+
+---
+
+## Build
+
+- run tests:
+
+```shell
+bundle exce rake rspec
+```
+
+- run code style checking:
+
+```shell
+bundle exec rake rubocop
+```
+
+- run code style checking with auto-correction:
+
+```shell
+bundle exec rake rubocop -A
+```
 
 ---
 

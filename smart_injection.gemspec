@@ -11,7 +11,11 @@ Gem::Specification.new do |spec|
   spec.email   = ['iamdaiver@gmail.com']
 
   spec.summary     = 'DI principles and idioms realized in scope of Ruby'
-  spec.description = 'DI principles and idioms realized in scope of Ruby'
+  spec.description = 'DI principles and idioms realized in scope of Ruby.' \
+                     'Support for method-injeciton strategy, ' \
+                     'container-based dependency resolving, ' \
+                     'static and dynamic bindings and etc.'
+
   spec.homepage    = 'https://github.com/smart-rb/smart_injection'
   spec.license     = 'MIT'
 
@@ -30,13 +34,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'smart_engine',    '~> 0.7'
-  spec.add_runtime_dependency 'smart_container', '~> 0.8'
+  spec.add_runtime_dependency 'smart_engine',    '~> 0.11'
+  spec.add_runtime_dependency 'smart_container', '~> 0.9'
 
-  spec.add_development_dependency 'bundler',          '~> 2.1'
+  spec.add_development_dependency 'bundler',          '~> 2.2'
   spec.add_development_dependency 'rake',             '~> 13.0'
-  spec.add_development_dependency 'rspec',            '~> 3.9'
-  spec.add_development_dependency 'armitage-rubocop', '~> 0.87'
-  spec.add_development_dependency 'simplecov',        '~> 0.18'
+  spec.add_development_dependency 'rspec',            '~> 3.10'
+  spec.add_development_dependency 'armitage-rubocop', '~> 1.7'
+  spec.add_development_dependency 'simplecov',        '~> 0.21'
   spec.add_development_dependency 'pry',              '~> 0.13'
 end

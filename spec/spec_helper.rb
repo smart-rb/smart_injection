@@ -4,10 +4,11 @@ require 'simplecov'
 
 SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
 SimpleCov.minimum_coverage(100)
-SimpleCov.start do
-  enable_coverage :branch
-  add_filter 'spec'
-end
+SimpleCov.enable_coverage(:branch)
+SimpleCov.enable_coverage(:line)
+SimpleCov.primary_coverage(:line)
+SimpleCov.add_filter('spec')
+SimpleCov.start
 
 require 'bundler/setup'
 require 'smart_core/injection'
