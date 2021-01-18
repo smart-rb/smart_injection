@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 # [0.2.0] - 2021-01-18
 ## Added
-- Support for *Ruby@3*;
+- Support for **Ruby@3**;
 
 ## Changed
 - No more `TravisCI` (todo: migrate to `GitHub Actions`);
