@@ -74,7 +74,7 @@ end
 
 ServiceContainer = SmartCore::Container.define do
   namespace(:rands) do
-    register(:alphanum) { -> { SeureRandom.alphanumeric } }
+    register(:alphanum) { -> { SecureRandom.alphanumeric } }
     register(:hex) { -> { SecureRandom.hex } }
   end
 end

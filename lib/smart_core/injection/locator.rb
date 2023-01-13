@@ -2,6 +2,7 @@
 
 # @api private
 # @since 0.1.0
+# @version 0.3.0
 class SmartCore::Injection::Locator
   require_relative 'locator/container_proxy'
   require_relative 'locator/dependency'
@@ -15,14 +16,17 @@ class SmartCore::Injection::Locator
 
   # @param import_path [String]
   # @param container_proxy [SmartCore::Injection::Locator::ContainerProxy]
+  # @option memoize_dependency [Boolean]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(import_path, container_proxy)
+  # @version 0.3.0
+  def initialize(import_path, container_proxy, memoize_dependency:)
     @import_path = import_path
     @container_proxy = container_proxy
-    @dependency = SmartCore::Injection::Locator::Dependency.new
+    @memoize_dependency = memoize_dependency
+    @dependency = SmartCore::Injection::Locator::Dependency.new(memoize: memoize_dependency)
   end
 
   # @return [Any]
@@ -56,4 +60,12 @@ class SmartCore::Injection::Locator
   # @api private
   # @since 0.1.0
   attr_reader :container_proxy
+
+  # NOTE: non-usable ivar, added only for commfort debaggung
+  # NOTE: will be reworked in next version
+  # @return [Boolean]
+  #
+  # @api private
+  # @since 0.3.0
+  attr_reader :memoize_dependency
 end

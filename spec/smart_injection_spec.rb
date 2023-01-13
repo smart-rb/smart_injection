@@ -169,5 +169,23 @@ RSpec.describe 'Smoke test' do
     expect(Cerberus.linked_containers).to contain_exactly(
       AppContainer, AnotherContainer
     )
+
+    # NOTE: runtime resolving check
+    require 'securerandom'
+    RandomizerService = SmartCore::Container.define do
+      namespace(:rands) do
+        register(:alphanum) { SecureRandom.alphanumeric }
+      end
+    end
+
+    class MiniRandomizationService
+      include SmartCore::Injection
+      register_container(RandomizerService)
+      import({ rnd: 'rands.alphanum' })
+      import({ mem_rnd: 'rands.alphanum' }, memoize: true)
+    end
+
+    expect(MiniRandomizationService.new.rnd).not_to eq(MiniRandomizationService.new.rnd)
+    expect(MiniRandomizationService.new.mem_rnd).to eq(MiniRandomizationService.new.mem_rnd)
   end
 end

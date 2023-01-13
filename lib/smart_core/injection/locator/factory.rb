@@ -11,7 +11,7 @@ module SmartCore::Injection::Locator::Factory
     # @since 0.1.0
     def create(injection_settings, import_key, import_path)
       container_proxy = create_container_proxy(injection_settings)
-      create_locator(import_path, container_proxy).tap do |locator|
+      create_locator(injection_settings, import_path, container_proxy).tap do |locator|
         control_injection_memoization(injection_settings, container_proxy, locator, import_path)
       end
     end
@@ -29,14 +29,19 @@ module SmartCore::Injection::Locator::Factory
       )
     end
 
+    # @param injection_settings [SmartCore::Injection::Injector::InjectionSettings]
     # @param import_path [String]
     # @param container_proxy [SmartCore::Injection::Locator::ContainerProxy]
     # @return [SmartCore::Injection::Locator]
     #
     # @api private
     # @since 0.1.0
-    def create_locator(import_path, container_proxy)
-      SmartCore::Injection::Locator.new(import_path, container_proxy)
+    def create_locator(injection_settings, import_path, container_proxy)
+      SmartCore::Injection::Locator.new(
+        import_path,
+        container_proxy,
+        memoize_dependency: injection_settings.memoize
+      )
     end
 
     # @param injection_settings [SmartCore::Injection::Injector::InjectionSettings]

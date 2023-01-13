@@ -2,14 +2,18 @@
 
 # @api private
 # @since 0.1.0
+# @version 0.3.0
 class SmartCore::Injection::Locator::Dependency
+  # @option memoize [Boolean]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize
+  # @version 0.3.0
+  def initialize(memoize:)
     @binded = false
     @value = nil
+    @memoize = memoize
     @barrier = SmartCore::Engine::Lock.new
   end
 
@@ -29,14 +33,32 @@ class SmartCore::Injection::Locator::Dependency
   # @return [Any]
   #
   # @api public
-  # @since 0.7.0
+  # @since 0.2.0
+  # @version 0.3.0
   def bind(&block)
     with_barrier do
-      if @binded
-        @value
+      # NOTE:
+      #   Temporary disabled old variant of dependency resolving
+      #   cuz we need to reivew the canonical way of dependency resolving
+      #   and rework the resolving at all on runtime level (under `memoize: true` option).
+      #   Old code variant:
+      #
+      #   if @binded
+      #     @value
+      #   else
+      #     @binded = true
+      #     @value = yield
+      #   end
+
+      if @memoize
+        if @binded
+          @value
+        else
+          @binded = true
+          @value = yield
+        end
       else
-        @binded = true
-        @value = yield
+        yield
       end
     end
   end
