@@ -2,6 +2,7 @@
 
 # @api private
 # @since 0.1.0
+# @verison 0.3.0
 module SmartCore::Injection::Locator::Factory
   class << self
     # @param injection_settings [SmartCore::Injection::Injector::InjectionSettings]
@@ -9,6 +10,7 @@ module SmartCore::Injection::Locator::Factory
     #
     # @api private
     # @since 0.1.0
+    # @version 0.3.0
     def create(injection_settings, import_key, import_path)
       container_proxy = create_container_proxy(injection_settings)
       create_locator(injection_settings, import_path, container_proxy).tap do |locator|
@@ -36,6 +38,7 @@ module SmartCore::Injection::Locator::Factory
     #
     # @api private
     # @since 0.1.0
+    # @version 0.3.0
     def create_locator(injection_settings, import_path, container_proxy)
       SmartCore::Injection::Locator.new(
         import_path,

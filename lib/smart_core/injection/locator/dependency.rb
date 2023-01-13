@@ -33,7 +33,7 @@ class SmartCore::Injection::Locator::Dependency
   # @return [Any]
   #
   # @api public
-  # @since 0.2.0
+  # @since 0.1.0
   # @version 0.3.0
   def bind(&block)
     with_barrier do

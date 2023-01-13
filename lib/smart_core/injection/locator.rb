@@ -61,7 +61,7 @@ class SmartCore::Injection::Locator
   # @since 0.1.0
   attr_reader :container_proxy
 
-  # NOTE: non-usable ivar, added only for commfort debaggung
+  # NOTE: non-usable ivar, added only for commfort debugging
   # NOTE: will be reworked in next version
   # @return [Boolean]
   #
