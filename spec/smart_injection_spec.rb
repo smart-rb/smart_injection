@@ -187,5 +187,7 @@ RSpec.describe 'Smoke test' do
 
     expect(MiniRandomizationService.new.rnd).not_to eq(MiniRandomizationService.new.rnd)
     expect(MiniRandomizationService.new.mem_rnd).to eq(MiniRandomizationService.new.mem_rnd)
+    insntance = MiniRandomizationService.new
+    expect(insntance.rnd).not_to eq(insntance.rnd)
   end
 end
