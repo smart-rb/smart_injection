@@ -127,7 +127,7 @@ end
 
 ## Roadmap
 
-- **[0.3.0]** - support for default injection configuration which should be specified in `SmartCore::Injection` module inclusion (in addition to default containers)
+- **[0.4.0]** - support for default injection configuration which should be specified in `SmartCore::Injection` module inclusion (in addition to default containers)
 - **[0.x.0]** - more docs, more examples, more tips-and-tricks :)
 - **[0.x.0]** - migrate to GithubActions;
 - **[0.x.0]** - type signatures (rbs);
